@@ -66,21 +66,35 @@ class DbHelper {
     String query =
         "select * from mysongs where songName like '%" + searchTerm + "%'";
     final List<Map<String, dynamic>> maps = await db!.rawQuery(query);
+    return maps
+        .map(
+          (e) => SongItem(
+              e["id"].toString(),
+              e["songName"],
+              e["songGYNumber"],
+              e["songTJNumber"],
+              e["songJanre"],
+              e["songUtubeAddress"],
+              e["songETC"],
+              e["songCreateTime"],
+              e["songFavorite"]),
+        )
+        .toList();
 
-    return List.generate(
-      maps.length,
-      (i) {
-        return SongItem(
-            maps[i]["id"].toString(),
-            maps[i]["songName"],
-            maps[i]["songGYNumber"],
-            maps[i]["songTJNumber"],
-            maps[i]["songJanre"],
-            maps[i]["songUtubeAddress"],
-            maps[i]["songETC"],
-            maps[i]["songCreateTime"],
-            maps[i]["songFavorite"]);
-      },
-    );
+    // return List.generate(
+    //   maps.length,
+    //   (i) {
+    //     return SongItem(
+    //         maps[i]["id"].toString(),
+    //         maps[i]["songName"],
+    //         maps[i]["songGYNumber"],
+    //         maps[i]["songTJNumber"],
+    //         maps[i]["songJanre"],
+    //         maps[i]["songUtubeAddress"],
+    //         maps[i]["songETC"],
+    //         maps[i]["songCreateTime"],
+    //         maps[i]["songFavorite"]);
+    //   },
+    // );
   }
 }
