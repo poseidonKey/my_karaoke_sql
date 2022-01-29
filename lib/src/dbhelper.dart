@@ -55,4 +55,32 @@ class DbHelper {
         );
     return id;
   }
+
+  Future<int> deleteList(SongItem list) async {
+    int id =
+        await this.db!.delete("mysongs", where: "id = ?", whereArgs: [list.id]);
+    return id;
+  }
+
+  Future<List<SongItem>> searchList(String searchTerm) async {
+    String query =
+        "select * from mysongs where songName like '%" + searchTerm + "%'";
+    final List<Map<String, dynamic>> maps = await db!.rawQuery(query);
+
+    return List.generate(
+      maps.length,
+      (i) {
+        return SongItem(
+            maps[i]["id"].toString(),
+            maps[i]["songName"],
+            maps[i]["songGYNumber"],
+            maps[i]["songTJNumber"],
+            maps[i]["songJanre"],
+            maps[i]["songUtubeAddress"],
+            maps[i]["songETC"],
+            maps[i]["songCreateTime"],
+            maps[i]["songFavorite"]);
+      },
+    );
+  }
 }
