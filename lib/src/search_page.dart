@@ -53,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
             suffixIcon: IconButton(
               icon: Icon(
-                Icons.clear,
+                Icons.delete_outline,
                 size: 30.0,
                 color: Colors.white,
               ),
@@ -75,8 +75,8 @@ class _SearchPageState extends State<SearchPage> {
       body: _notes == null
           ? Center(
               child: Text(
-                'Search for Notes',
-                style: TextStyle(fontSize: 18.0),
+                '노래곡명으로 검색',
+                style: TextStyle(fontSize: 22.0, color: Colors.blueAccent),
               ),
             )
           : FutureBuilder(
