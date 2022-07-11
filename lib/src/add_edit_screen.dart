@@ -62,8 +62,9 @@ class _AddEditPageState extends State<AddEditPage> {
                   vertical: 5.0,
                 ),
                 child: TextFormField(
-                  initialValue:
-                      widget.isNew == true ? null : widget.songItem!.songGYNumber,
+                  initialValue: widget.isNew == true
+                      ? null
+                      : widget.songItem!.songGYNumber,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     filled: true,
@@ -80,8 +81,9 @@ class _AddEditPageState extends State<AddEditPage> {
                   vertical: 5.0,
                 ),
                 child: TextFormField(
-                  initialValue:
-                      widget.isNew == true ? null : widget.songItem!.songTJNumber,
+                  initialValue: widget.isNew == true
+                      ? null
+                      : widget.songItem!.songTJNumber,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     filled: true,
@@ -133,8 +135,9 @@ class _AddEditPageState extends State<AddEditPage> {
                   vertical: 5.0,
                 ),
                 child: TextFormField(
-                  initialValue:
-                      widget.isNew == true ? null : widget.songItem!.songUtubeAddress,
+                  initialValue: widget.isNew == true
+                      ? null
+                      : widget.songItem!.songUtubeAddress,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     filled: true,
@@ -150,7 +153,7 @@ class _AddEditPageState extends State<AddEditPage> {
                 ),
                 child: TextFormField(
                   initialValue:
-                      widget.isNew == true ? null : widget.songItem!.songJanre,
+                      widget.isNew == true ? null : widget.songItem!.songETC,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     filled: true,
@@ -166,8 +169,8 @@ class _AddEditPageState extends State<AddEditPage> {
                 ),
                 child: TextFormField(
                   initialValue: widget.isNew == true
-                      ? "2022.1.1"
-                      : "2022.1.1",
+                      ? "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}"
+                      : widget.songItem!.songCreateTime,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     filled: true,
@@ -175,7 +178,8 @@ class _AddEditPageState extends State<AddEditPage> {
                   ),
                   // readOnly: true,
                   enabled: false,
-                  onSaved: (val) => _createTime = "2022.1.1",
+                  onSaved: (val) => _createTime =
+                      "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
                 ),
               ),
               SizedBox(height: 20.0),
@@ -192,6 +196,7 @@ class _AddEditPageState extends State<AddEditPage> {
       ),
     );
   }
+
   void submit(String mode) async {
     setState(() {
       autovalidateMode = AutovalidateMode.always;
@@ -200,21 +205,21 @@ class _AddEditPageState extends State<AddEditPage> {
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
     try {
-      DbHelper helper=DbHelper();
+      DbHelper helper = DbHelper();
       helper.openDb();
       if (mode == "add") {
         final newEventDetail = SongItem(
             null,
             _songName!,
             _songGYNumber!,
-            _songTJNumber!, 
+            _songTJNumber!,
             _songJanre,
             _songUtubeAddress!,
             _songETC!,
             _createTime!,
             _songFavorite);
-            helper.insertList(newEventDetail);
-            Get.back();
+        helper.insertList(newEventDetail);
+        Get.back();
       } else {
         final newEventDetail = SongItem(
             widget.songItem!.id,
@@ -224,10 +229,10 @@ class _AddEditPageState extends State<AddEditPage> {
             _songJanre,
             _songUtubeAddress!,
             _songETC!,
-            "2022.1.1",
+            "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
             _songFavorite);
-            helper.insertList(newEventDetail);
-            Get.back();
+        helper.insertList(newEventDetail);
+        Get.back();
       }
     } catch (e) {
       print(e);
